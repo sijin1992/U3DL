@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b08ae58dd1c919247a9d62090862fda3
-timeCreated: 1566995127
+timeCreated: 1567326941
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -90,7 +90,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 184
+        y: 185
         width: 80
         height: 164
       alignment: 0
@@ -128,7 +128,7 @@ TextureImporter:
       name: walking_robot_3
       rect:
         serializedVersion: 2
-        x: 580
+        x: 581
         y: 184
         width: 96
         height: 168
@@ -142,7 +142,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 4
+        y: 5
         width: 80
         height: 164
       alignment: 0

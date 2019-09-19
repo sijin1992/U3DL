@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class chapter4 : MonoBehaviour {
+    [SerializeField] private Text text;
+    [SerializeField] private Image image;
+    [SerializeField] private RawImage rawImage;
     [SerializeField] private Button button;
     [SerializeField] private Toggle toggle;
     [SerializeField] private Slider slider;
