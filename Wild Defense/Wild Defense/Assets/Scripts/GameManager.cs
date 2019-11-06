@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine.UI;//UI控件命名空间的引用
 using UnityEngine.Events;//UI事件命名空间的引用
 using UnityEngine.EventSystems;//UI事件命名空间的引用
@@ -20,6 +19,8 @@ public class GameManager : MonoBehaviour {
 
     public bool m_debug = true;//显示路点的debug开关
     public List<PathNode> m_PathNodes;//路点
+
+    public List<Enemy> m_EnemyList = new List<Enemy>();
 
     //UI文字控件
     Text m_txt_wave;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour {
         //按钮抬起事件
         EventTrigger.Entry up = new EventTrigger.Entry();
         up.eventID = EventTriggerType.PointerUp;
-        down.callback.AddListener(upAction);
+        up.callback.AddListener(upAction);
 
         //查找所有子物体，根据名称获取UI控件
         foreach (Transform t in this.GetComponentInChildren<Transform>())
@@ -146,7 +147,42 @@ public class GameManager : MonoBehaviour {
     //抬起“创建防守单位按钮”
     void OnButCreateDefenderUp(BaseEventData data)
     {
-        GameObject go = data.selectedObject;
+        //创建射线
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitinfo;
+        bool ispeng = Physics.Raycast(ray, out hitinfo, 1000, m_groundlayer);
+        print(ispeng);
+        //检测是否与地面相碰撞
+        if (Physics.Raycast(ray,out hitinfo,1000,m_groundlayer))
+        {
+            //如果选中的是一个可用的格子
+            if (TileObject.Instance.getDataFromPosition(hitinfo.point.x,hitinfo.point.z)==(int)Defender.TileStatus.GUARD)
+            {
+                //获得碰撞点位置
+                Vector3 hitpos = new Vector3(hitinfo.point.x, 0, hitinfo.point.z);
+                //获得Grid Object坐标位置
+                Vector3 gridPos = TileObject.Instance.transform.position;
+                //获得格子大小
+                float tilesize = TileObject.Instance.tileSize;
+                //计算出所点击格子的中心位置
+                hitpos.x = gridPos.x + (int)((hitpos.x - gridPos.x) / tilesize) * tilesize + tilesize * 0.5f;
+                hitpos.z = gridPos.z + (int)((hitpos.z - gridPos.z) / tilesize) * tilesize + tilesize * 0.5f;
+
+                //获得选择的按钮GameObject,将简单通过按钮名字判断选择了哪个按钮
+                GameObject go = data.selectedObject;
+                if (go.name.Contains("1"))//如果按钮名字包括“1”
+                {
+                    if (SetPoint(-15))//减15个铜钱，然后创建近战防守单位
+                    Defender.Create<Defender>(hitpos, new Vector3(0, 180, 0));
+                }
+                else if (go.name.Contains("2"))//如果按钮名字包括"2"
+                {
+                    if (SetPoint(-20))//减20个铜钱，然后创建远程防守单位
+                        Defender.Create<Archer>(hitpos, new Vector3(0, 180, 0));
+                }
+            }
+        }
+        m_isSelectedButton = false;
     }
 
     [ContextMenu("BuildPath")]
