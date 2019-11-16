@@ -60,6 +60,7 @@ public static class NetManager
         {
             Socket socket = (Socket)ar.AsyncState;
             int count = socket.EndReceive(ar);
+            Debug.Log("Receive success" + count);
             string recvStr = System.Text.Encoding.Default.GetString(readBuff, 0, count);
             msgList.Add(recvStr);
             socket.BeginReceive(readBuff, 0, 1024, 0, ReceiveCallback, socket);
@@ -97,12 +98,13 @@ public static class NetManager
     {
         if (msgList.Count <= 0)
             return;
-        String msgStr = msgList[0];
+        string msgStr = msgList[0];
         msgList.RemoveAt(0);
         string[] split = msgStr.Split('|');
         string msgName = split[0];
         string msgArgs = split[1];
         //监听回调
+        Debug.Log(msgName);
         if (listeners.ContainsKey(msgName))
         {
             listeners[msgName](msgArgs);

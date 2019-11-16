@@ -1,0 +1,76 @@
+Initialize engine version: 5.6.6f2 (6bac21139588)
+GfxDevice: creating device client; threaded=1
+d3d11: D3D_FEATURE_LEVEL_11_1 not-recognized (only 11.0 runtime installed?)
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GT 650M (ID=0xfd1)
+    Vendor:   NVIDIA
+    VRAM:     1979 MB
+    Driver:   24.21.13.9764
+Begin MonoManager ReloadAssembly
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.056 seconds
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: F:\U3DL\Echo\Melee\Melee\packages\Melee20191116_Data\Managed\System.dll (this message is harmless)
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.826838 ms
+Socket Connect Success
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Socket Send success22
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Receive success22
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Receive success76
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Socket Send success5
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 484c -> priority: 1 
+  Thread -> id: 4660 -> priority: 1 
+Enter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnEnter,-5,0,3,134.1649
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+List
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+OnList127.0.0.1:61729,4,0,3,134.1649,100,127.0.0.1:61737,-5,0,3,134.1649,100,
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Main.OnList (System.String msgArgs) [0x00000] in <filename unknown>:0 
+  at NetManager.Update () [0x00000] in <filename unknown>:0 
+  at Main.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
