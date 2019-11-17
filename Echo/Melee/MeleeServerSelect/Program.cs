@@ -129,6 +129,3 @@ namespace MeleeServerSelect
         }
     }
 }
-
-
-

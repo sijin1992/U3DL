@@ -15,6 +15,8 @@ public class Main : MonoBehaviour {
         NetManager.AddListener("Enter", OnEnter);
         NetManager.AddListener("List", OnList);
         NetManager.AddListener("Move", OnMove);
+        NetManager.AddListener("Attack", OnAttack);
+        NetManager.AddListener("Die", OnDie);
         NetManager.AddListener("Leave", OnLeave);
         NetManager.Connect("127.0.0.1", 8888);
         //添加一个角色,初始化其他角色列表
@@ -79,10 +81,63 @@ public class Main : MonoBehaviour {
     void OnMove(string msgArgs)
     {
         Debug.Log("OnMove" + msgArgs);
+        //解析参数
+        string[] split = msgArgs.Split(',');
+        string desc = split[0];
+        float x = float.Parse(split[1]);
+        float y = float.Parse(split[2]);
+        float z = float.Parse(split[3]);
+        //移动
+        if (!otherHumans.ContainsKey(desc))
+            return;
+        BaseHuman h = otherHumans[desc];
+        Vector3 targetPos = new Vector3(x, y, z);
+        h.MoveTo(targetPos);
+    }
+
+    void OnAttack(string msgArgs)
+    {
+        Debug.Log("OnAttack" + msgArgs);
+        //解析参数
+        string[] split = msgArgs.Split(',');
+        string desc = split[0];
+        float eulY = float.Parse(split[1]);
+        //攻击动作
+        if (!otherHumans.ContainsKey(desc))
+            return;
+        SyncHuman h = (SyncHuman)otherHumans[desc];
+        h.SyncAttack(eulY);
+    }
+
+    void OnDie(string msgArgs)
+    {
+        Debug.Log("OnDie" + msgArgs);
+        //解析参数
+        string[] split = msgArgs.Split(',');
+        string hitDesc = split[0];
+        //自己死了
+        if (hitDesc == myHuman.desc)
+        {
+            Debug.Log("GameOver");
+            return;
+        }
+        //死了
+        if (!otherHumans.ContainsKey(hitDesc))
+            return;
+        SyncHuman h = (SyncHuman)otherHumans[hitDesc];
+        h.gameObject.SetActive(false);
     }
 
     void OnLeave(string msgArgs)
     {
         Debug.Log("OnLeave" + msgArgs);
+        //解析参数
+        string[] split = msgArgs.Split(',');
+        string desc = split[0];
+        //删除
+        if (!otherHumans.ContainsKey(desc))
+            return;
+        BaseHuman h = otherHumans[desc];
+        Destroy(h.gameObject);
     }
 }

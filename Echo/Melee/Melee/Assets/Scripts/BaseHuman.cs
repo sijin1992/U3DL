@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseHuman : MonoBehaviour {
-
+    //是否正在攻击
+    internal bool isAttacking = false;
+    internal float attackTime = float.MinValue;
     //是否正在移动
     protected bool isMoving = false;
     //移动目标点
@@ -37,6 +39,21 @@ public class BaseHuman : MonoBehaviour {
             animator.SetBool("isMoving", false);
         }
     }
+    //攻击动作
+    public void Attack()
+    {
+        isAttacking = true;
+        attackTime = Time.time;
+        animator.SetBool("isAttacking", true);
+    }
+    //攻击Update
+    public void AttackUpdate()
+    {
+        if (!isAttacking) return;
+        if (Time.time - attackTime < 1.2f) return;
+        isAttacking = false;
+        animator.SetBool("isAttacking", false);
+    }
 
 	// Use this for initialization
 	protected void Start () {
@@ -46,5 +63,6 @@ public class BaseHuman : MonoBehaviour {
 	// Update is called once per frame
 	protected void Update () {
         MoveUpdate();
-	}
+        AttackUpdate();
+    }
 }
