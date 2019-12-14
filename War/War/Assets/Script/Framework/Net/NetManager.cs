@@ -5,16 +5,15 @@ using System.Net.Sockets;
 using System;
 using System.Linq;
 
-//事件
-public enum NetEvent
-{
-    ConnectSucc = 1,
-    ConnectFail = 2,
-    Close = 3,
-}
-
 public static class NetManager
 {
+    //事件
+    public enum NetEvent
+    {
+        ConnectSucc = 1,
+        ConnectFail = 2,
+        Close = 3,
+    }
     //定义套接字
     static Socket socket;
     //接收缓冲区
@@ -66,6 +65,8 @@ public static class NetManager
 
     //是否正在连接
     static bool isConnecting = false;
+    //是否正在关闭
+    static bool isClosing = false;
 
     //连接
     public static void Connect(string ip,int port)
@@ -100,6 +101,8 @@ public static class NetManager
         writeQueue = new Queue<ByteArray>();
         //是否正在连接
         isConnecting = false;
+        //是否正在关闭
+        isClosing = false;
     }
 
     //Connect回调
@@ -118,6 +121,33 @@ public static class NetManager
             Debug.Log("Socket Connect fail " + ex.ToString());
             FireEvent(NetEvent.ConnectFail, ex.ToString());
             isConnecting = false;
+        }
+    }
+
+    //关闭连接
+    public static void Close()
+    {
+        //状态判断
+        if (socket == null || !socket.Connected)
+        {
+            return;
+        }
+
+        if (isConnecting)
+        {
+            return;
+        }
+
+        //还有数据在发送
+        if (writeQueue.Count > 0)
+        {
+            isClosing = true;
+        }
+        //没有数据在发送
+        else
+        {
+            socket.Close();
+            FireEvent(NetEvent.Close, "");
         }
     }
 }

@@ -7,6 +7,12 @@ public class Test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //ByteArrayTest();
+        NetManagerTest();
+	}
+
+    private void ByteArrayTest()
+    {
         //[1 创建]
         ByteArray buff = new ByteArray(8);
         Debug.Log("[1 debug] ->" + buff.Debug());
@@ -27,5 +33,47 @@ public class Test : MonoBehaviour {
         buff.Write(wb, 0, 6);
         Debug.Log("[4 debug] ->" + buff.Debug());
         Debug.Log("[4 string] ->" + buff.ToString());
-	}
+    }
+
+    private void NetManagerTest()
+    {
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
+        NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);
+    }
+
+    //玩家点击连接按钮
+    public void OnConnectClick()
+    {
+        NetManager.Connect("127.0.0.1", 8888);
+        //TODO:开始转圈圈,提示“连接中”
+    }
+
+    //主动关闭
+    public void OnCloseClick()
+    {
+        NetManager.Close();
+    }
+
+    //连接成功回调
+    void OnConnectSucc(string err)
+    {
+        Debug.Log("OnConnectSucc");
+        //TODO:进入游戏
+    }
+
+    //连接失败回调
+    void OnConnectFail(string err)
+    {
+        Debug.Log("OnConnectFail" + err);
+        //TODO:弹出提示框
+    }
+
+    //关闭连接
+    void OnConnectClose(string err)
+    {
+        Debug.Log("OnConnectClose");
+        //TODO:弹出提示框(网络断开)
+        //TODO:弹出按钮(重新连接)
+    }
 }
