@@ -76,4 +76,14 @@ public class Test : MonoBehaviour {
         //TODO:弹出提示框(网络断开)
         //TODO:弹出按钮(重新连接)
     }
+
+    //玩家点击发送按钮
+    public void OnMoveClick()
+    {
+        MsgMove msg = new MsgMove();
+        msg.x = 120;
+        msg.y = 123;
+        msg.z = -6;
+        NetManager.Send(msg);
+    }
 }
