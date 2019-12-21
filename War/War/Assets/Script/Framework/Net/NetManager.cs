@@ -108,6 +108,16 @@ public static class NetManager
         msgList = new List<MsgBase>();
         //消息列表长度
         msgCount = 0;
+
+        //上一次发送PING的时间
+        lastPingTime = Time.time;
+        //上一次收到PONG的时间
+        lastPongTime = Time.time;
+        //监听PONG协议
+        if (!msgListeners.ContainsKey("MsgPong"))
+        {
+            AddMsgListener("MsgPong", OnMsgPong);
+        }
     }
 
     //Connect回调
@@ -366,4 +376,84 @@ public static class NetManager
     static int msgCount = 0;
     //每一次Update处理的消息量
     readonly static int MAX_MESSAGE_FIRE = 10;
+
+    //Update
+    public static void Update()
+    {
+        MsgUpdate();
+        PingUpdate();
+    }
+    //更新消息
+    public static void MsgUpdate()
+    {
+        //初步判断，提升效率
+        if (msgCount == 0)
+        {
+            return;
+        }
+        //重复处理消息
+        for (int i = 0; i < MAX_MESSAGE_FIRE; i++)
+        {
+            //获取第一条消息
+            MsgBase msgBase = null;
+            lock (msgList)
+            {
+                if (msgList.Count > 0)
+                {
+                    msgBase = msgList[0];
+                    msgList.RemoveAt(0);
+                    msgCount--;
+                }
+            }
+            //分发消息
+            if (msgBase != null)
+            {
+                FireMsg(msgBase.protoName, msgBase);
+            }
+            //没有消息了
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    //是否启用心跳
+    public static bool isUsePing = true;
+    //心跳间隔时间
+    public static int pingInterval = 10;
+    //上一次发送PING的时间
+    static float lastPingTime = 0;
+    //上一次收到PONG的时间
+    static float lastPongTime = 0;
+
+    //发送PING协议
+    private static void PingUpdate()
+    {
+        //是否启用
+        if (!isUsePing)
+        {
+            return;
+        }
+        Debug.Log("time:" + Time.time + "lastPingTime:" + lastPingTime);
+        //发送PING
+        if (Time.time - lastPingTime > pingInterval)
+        {
+            MsgPing msgPing = new MsgPing();
+            Send(msgPing);
+            Debug.Log("PingUpdate" + msgPing.protoName);
+            lastPingTime = Time.time;
+        }
+        //检测PONG时间
+        if (Time.time - lastPongTime > pingInterval * 4)
+        {
+            Close();
+        }
+    }
+
+    //监听PONG协议
+    private static void OnMsgPong(MsgBase msgBase)
+    {
+        lastPongTime = Time.time;
+    }
 }

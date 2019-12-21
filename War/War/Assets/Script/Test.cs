@@ -40,6 +40,7 @@ public class Test : MonoBehaviour {
         NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
         NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
         NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);
+        NetManager.AddMsgListener("MsgMove", OnMsgMove);
     }
 
     //玩家点击连接按钮
@@ -85,5 +86,21 @@ public class Test : MonoBehaviour {
         msg.y = 123;
         msg.z = -6;
         NetManager.Send(msg);
+    }
+
+    //收到MsgMove协议
+    public void OnMsgMove(MsgBase msgBase)
+    {
+        MsgMove msg = (MsgMove)msgBase;
+        //消息处理
+        Debug.Log("OnMsgMove msg.x = " + msg.x);
+        Debug.Log("OnMsgMove msg.y = " + msg.y);
+        Debug.Log("OnMsgMove msg.z = " + msg.y);
+    }
+
+    //Update
+    public void Update()
+    {
+        NetManager.Update();
     }
 }

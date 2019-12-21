@@ -93,7 +93,8 @@ namespace EchoServerSelect
             //广播
             string recvStr = System.Text.Encoding.Default.GetString(state.readBuff, 0, count);
             Console.WriteLine("Receive" + recvStr);
-            string sendStr = "(" + clientfd.RemoteEndPoint.ToString() +")" + System.DateTime.Now.ToString() + ":" + recvStr;
+            //string sendStr = "(" + clientfd.RemoteEndPoint.ToString() +")" + System.DateTime.Now.ToString() + ":" + recvStr;
+            string sendStr = recvStr;
             byte[] sendBytes = System.Text.Encoding.Default.GetBytes(sendStr);
             foreach (ClientState cs in clients.Values)
             {
